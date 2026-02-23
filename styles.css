@@ -9,19 +9,37 @@
     --clr-white: 0 0% 100%;
 
     /* font-sizes */
-    --fs-200: 0.875rem;
-    --fs-300: 1rem;
-    --fs-400: 1.125rem;
+    --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+    --fs-800: 3.5rem;
+    --fs-700: 1.5rem;
+    --fs-600: 1rem;
     --fs-500: 1.75rem;
-    --fs-600: 2rem;
-    --fs-700: 3.5rem;
-    --fs-800: 6.25rem;
-    --fs-900: 9rem;
+    --fs-400: 0.9375rem;
+    --fs-300: 1rem;
+    --fs-200: 0.875rem;
 
     /* font-families */
     --ff-serif: "Bellefair", serif;
     --ff-sans-cond: "Barlow Condensed", sans-serif;
     --ff-sans-normal: "Barlow", sans-serif;
+}
+
+@media (min-width: 35em) {
+    :root {
+        --fs-800: 5rem;
+        --fs-700: 2.5rem;
+        --fs-600: 1.5rem;
+        --fs-400: 1rem;
+    }
+}
+
+@media (min-width: 45em) {
+    :root {
+        --fs-800: 6.25rem;
+        --fs-700: 3.5rem;
+        --fs-600: 2rem;
+        --fs-400: 1.125rem;
+    }
 }
 
 /* ------------------- */
@@ -33,13 +51,6 @@
 *::before,
 *::after {
     box-sizing: border-box;
-}
-
-/* Prevent font size inflation */
-html {
-    -moz-text-size-adjust: none;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
 }
 
 /* Remove default margin */
@@ -56,6 +67,16 @@ picture {
    margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-weight: 400;
+}
+
 /* Set core body defaults */
 body {
     font-family: var(--ff-sans-normal);
@@ -64,6 +85,9 @@ body {
     background-color: hsl( var(--clr-dark) );
     min-height: 100vh;
     line-height: 1.5;
+
+    display: grid;
+    grid-template-rows: min-content 1fr;
 }
 
 /* Set shorter line heights on headings and interactive elements */
@@ -75,14 +99,6 @@ button,
 input,
 label {
     line-height: 1.1;
-}
-
-/* Balance text wrapping on headings */
-h1,
-h2,
-h3,
-h4 {
-    text-wrap: balance;
 }
 
 /* Make images easier to work with */
@@ -97,18 +113,12 @@ input,
 button,
 textarea,
 select {
-    font-family: inherit;
-    font-size: inherit;
+    font: inherit;
 }
 
 /* Make sure textareas without a rows attribute are not tiny */
 textarea:not([rows]) {
     min-height: 10em;
-}
-
-/* Anything that has been anchored to should have extra scroll margin */
-:target {
-    scroll-margin-block: 5ex;
 }
 
 /* Remove animations for people who've turned them off */
@@ -129,6 +139,10 @@ textarea:not([rows]) {
 
 /* general */
 
+.d-block {
+    display: block;
+}
+
 .flex {
     display: flex;
     gap: var(--gap, 1rem);
@@ -147,6 +161,38 @@ textarea:not([rows]) {
     padding-inline: 2em;
     margin-inline: auto;
     max-width: 80rem;
+}
+
+.grid-container {
+    display: grid;
+    place-items: center;
+    padding-inline: 2rem;
+    text-align: center;
+}
+
+.grid-container * {
+    max-width: 50ch;
+}
+
+@media (min-width: 45em) {
+    .grid-container {
+        grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(1rem, 1fr);
+        column-gap: var(--container-gap, 2rem);
+        text-align: left;
+    }
+
+    .grid-container > :first-child {
+        grid-column: 2;
+    }
+
+    .grid-container > :last-child {
+        grid-column: 3;
+    }
+
+    .grid-container--home {
+        padding-bottom: max(6rem, 20vh);
+        align-items: end;
+    }
 }
 
 .sr-only {
@@ -250,7 +296,7 @@ textarea:not([rows]) {
 } */
 
 .large-button {
-    display: grid;
+    display: inline-grid;
     position: relative;
     padding: 0 2em;
     aspect-ratio: 1;
@@ -258,6 +304,7 @@ textarea:not([rows]) {
     place-items: center;
     text-decoration: none;
     z-index: 1;
+    font-size: 2rem;
 }
 
 .large-button::after {
@@ -322,4 +369,32 @@ textarea:not([rows]) {
     background-color: hsl( var(--clr-white) );
     color: hsl( var(--clr-dark) );
     font-weight: 600;
+}
+
+/* ---------------------------- */
+/* Page Specific Backgrounds    */
+/* ---------------------------- */
+
+/* home */
+
+body {
+    background-size: cover;
+    background-position: bottom center;
+}
+
+.home {
+    background-image: url(assets/home/background-home-mobile.jpg);
+}
+
+@media (min-width: 35em) {
+    .home {
+        background-image: url(assets/home/background-home-tablet.jpg);
+        background-position: center center;
+    }
+}
+
+@media (min-width: 45em) {
+    .home {
+        background-image: url(assets/home/background-home-desktop.jpg);
+    }
 }
