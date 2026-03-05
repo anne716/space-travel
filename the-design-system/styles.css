@@ -278,6 +278,7 @@ textarea:not([rows]) {
     padding: var(--underline-gap, 1rem) 0;
     border: 0;
     border-bottom: .2rem solid hsl( var(--clr-white) / 0 );
+    background: transparent;
 }
 
 .underline-indicators > *:hover,
