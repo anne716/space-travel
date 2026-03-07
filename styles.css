@@ -13,7 +13,7 @@
     --fs-800: 3.5rem;
     --fs-700: 1.5rem;
     --fs-600: 1rem;
-    --fs-500: 1.75rem;
+    --fs-500: 1rem;
     --fs-400: 0.9375rem;
     --fs-300: 1rem;
     --fs-200: 0.875rem;
@@ -29,6 +29,7 @@
         --fs-800: 5rem;
         --fs-700: 2.5rem;
         --fs-600: 1.5rem;
+        --fs-500: 1.25rem;
         --fs-400: 1rem;
     }
 }
@@ -38,6 +39,7 @@
         --fs-800: 6.25rem;
         --fs-700: 3.5rem;
         --fs-600: 2rem;
+        --fs-500: 1.75rem;
         --fs-400: 1.125rem;
     }
 }
@@ -92,20 +94,8 @@ body {
     overflow-x: hidden;
 }
 
-/* Set shorter line heights on headings and interactive elements */
-h1,
-h2,
-h3,
-h4,
-button,
-input,
-label {
-    line-height: 1.1;
-}
-
 /* Make images easier to work with */
-img,
-picture {
+img {
     max-width: 100%;
     display: block;
 }
@@ -116,11 +106,6 @@ button,
 textarea,
 select {
     font: inherit;
-}
-
-/* Make sure textareas without a rows attribute are not tiny */
-textarea:not([rows]) {
-    min-height: 10em;
 }
 
 /* Remove animations for people who've turned them off */
@@ -140,11 +125,6 @@ textarea:not([rows]) {
 /* ------------------- */
 
 /* general */
-
-.d-block {
-    display: block;
-}
-
 .flex {
     display: flex;
     gap: var(--gap, 1rem);
@@ -153,6 +133,10 @@ textarea:not([rows]) {
 .grid {
     display: grid;
     gap: var(--gap, 1rem);
+}
+
+.d-block {
+    display: block;
 }
 
 .flow > *:where(:not(:first-child)) {
@@ -227,6 +211,13 @@ textarea:not([rows]) {
 .fs-300 { font-size: var(--fs-300); }
 .fs-200 { font-size: var(--fs-200); }
 
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+    line-height: 1.1;
+}
+
 .numbered-title {
     font-family: var(--ff-sans-cond);
     font-size: var(--fs-500);
@@ -243,6 +234,38 @@ textarea:not([rows]) {
 /* ------------------- */
 /* Components          */
 /* ------------------- */
+
+.large-button {
+    display: inline-grid;
+    position: relative;
+    padding: 0 2em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    place-items: center;
+    text-decoration: none;
+    z-index: 1;
+    font-size: 2rem;
+}
+
+.large-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: -1;
+    background: hsl( var(--clr-white) / .1 );
+    opacity: 0;
+    transition: opacity 500ms linear, transform 750ms ease-in-out;
+}
+
+.large-button:hover::after,
+.large-button:focus::after {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+/* primary header */
 
 .logo {
     margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
@@ -382,44 +405,14 @@ textarea:not([rows]) {
     border-color: hsl( var(--clr-white) / 1 );
 }
 
-.large-button {
-    display: inline-grid;
-    position: relative;
-    padding: 0 2em;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    place-items: center;
-    text-decoration: none;
-    z-index: 1;
-    font-size: 2rem;
-}
-
-.large-button::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    z-index: -1;
-    background-color: hsl( var(--clr-white) / .1 );
-    opacity: 0;
-    transition: opacity 500ms linear, transform 750ms ease-in-out;
-}
-
-.large-button:hover::after,
-.large-button:focus::after {
-    opacity: 1;
-    transform: scale(1.5);
-}
-
 .tab-list {
     --gap: 2rem;
 }
 
-.dot-indicators > button {
+.dot-indicators > * {
     padding: .5em;
     border-radius: 50%;
-    border: none;
+    border: 0;
     background-color: hsl( var(--clr-white) / .25 );
     cursor: pointer;
 }
@@ -429,33 +422,8 @@ textarea:not([rows]) {
     background-color: hsl( var(--clr-white) / .5 );
 }
 
-.dot-indicators > button[aria-selected="true"] {
+.dot-indicators > [aria-selected="true"] {
     background-color: hsl( var(--clr-white) / 1 );
-}
-
-.number-indicators {
-    flex-direction: column;
-}
-
-.number-indicators > button {
-    display: grid;
-    place-items: center;
-    width: 3rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 1px solid hsl( var(--clr-white) / .25 );
-    cursor: pointer;
-}
-
-.number-indicators > button:hover,
-.number-indicators > button:focus {
-    border-color: hsl( var(--clr-white) / .5 );
-}
-
-.number-indicators > button[aria-selected="true"] {
-    background-color: hsl( var(--clr-white) );
-    color: hsl( var(--clr-dark) );
-    font-weight: 600;
 }
 
 /* ---------------------------- */
@@ -547,6 +515,7 @@ body {
 .grid-container--destination > picture {
     grid-area: image;
     max-width: 60%;
+    align-self: start;
 }
 
 .grid-container--destination > .tab-list {
@@ -562,6 +531,10 @@ body {
     border-top: 1px solid hsl( var(--clr-white) / .1 );
     padding-top: 2.5rem;
     margin-top: 2.5rem;
+}
+
+.destination-meta p {
+    font-size: 1.75rem;
 }
 
 /* crew layout */
@@ -655,6 +628,7 @@ body {
     .grid-container--crew {
         justify-items: start;
         align-content: start;
+        grid-template-columns: minmax(1rem, 1fr) minmax(0, 37rem) minmax(0, 23rem) minmax(1rem, 1fr);
         grid-template-areas:
             ". title title ."
             ". content image ."
@@ -662,10 +636,8 @@ body {
     }
 
     .grid-container--crew > picture {
+        grid-column: span 2;
+        align-self: end;
         max-width: 90%;
     }
-
-    /* .grid-container--crew > picture {
-        align-self: end;
-    } */
 }
