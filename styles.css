@@ -637,6 +637,10 @@ body {
             "tabs"
             "image";
     }
+
+    .grid-container--technology {
+        --flow-space: 2rem;
+    }
 }
 
 @media (min-width: 45em) {
