@@ -426,6 +426,31 @@ select {
     background-color: hsl( var(--clr-white) / 1 );
 }
 
+.number-indicators {
+    flex-direction: row;
+}
+
+.number-indicators > button {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid hsl( var(--clr-white) / .25 );
+    cursor: pointer;
+}
+
+.number-indicators > button:hover,
+.number-indicators > button:focus {
+    border-color: hsl( var(--clr-white) / .5 );
+}
+
+.number-indicators > button[aria-selected="true"] {
+    background-color: hsl( var(--clr-white) );
+    color: hsl( var(--clr-dark) );
+    font-weight: 600;
+}
+
 /* ---------------------------- */
 /* Page Specific Backgrounds    */
 /* ---------------------------- */
@@ -563,6 +588,33 @@ body {
 }
 
 .crew-info h2 {
+    color: hsl( var(--clr-white) / .5 );
+}
+
+/* technology layout */
+
+.grid-container--technology {
+    grid-template-areas:
+        "title"
+        "image"
+        "tabs"
+        "content";
+}
+
+.grid-container--technology > picture {
+    grid-area: image;
+    max-width: 100%;
+}
+
+.grid-container--technology > .number-indicators {
+    grid-area: tabs;
+}
+
+.grid-container--technology > .technology-info {
+    grid-area: content;
+}
+
+.technology-info h2 {
     color: hsl( var(--clr-white) / .5 );
 }
 
